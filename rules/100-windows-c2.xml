@@ -1,0 +1,14 @@
+<group name="local,dac,attack.t1571,">
+
+  <rule id="100130" level="12">
+    <if_sid>92101</if_sid>
+    <field name="win.eventdata.destinationPort" type="pcre2">^(4444|4445|1337|9001|8080|8443|1234)$</field>
+    <field name="win.eventdata.initiated">^true$</field>
+    <description>DaC: PowerShell C2 callback to $(win.eventdata.destinationIp):$(win.eventdata.destinationPort)</description>
+    <mitre>
+      <id>T1059.001</id>
+      <id>T1571</id>
+    </mitre>
+  </rule>
+
+</group>

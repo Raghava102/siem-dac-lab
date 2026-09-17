@@ -1,0 +1,1 @@
+2026-09-17T12:18:39.731735+05:30 project-IdeaPad-3-14ITL6 sudo: project : TTY=/dev/pts/0 ; PWD=/home/project ; USER=root ; COMMAND=/usr/bin/grep Failed password /var/log/auth.log
