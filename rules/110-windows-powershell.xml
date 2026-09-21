@@ -11,7 +11,7 @@
 
   Anchor: 92027 is confirmed on this install (fired during baseline).
   If a run shows the intended event decoding but NOT matching 92027,
-  widen the anchor to <if_group>sysmon_event1</if_group> and
+  widen the anchor to if_group sysmon_event1 and
   re-test with wazuh-logtest.
 -->
 
