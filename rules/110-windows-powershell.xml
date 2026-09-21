@@ -11,7 +11,7 @@
 
   Anchor: 92027 is confirmed on this install (fired during baseline).
   If a run shows the intended event decoding but NOT matching 92027,
-  widen the anchor to <if_group>sysmon_eid1_detections</if_group> and
+  widen the anchor to <if_group>sysmon_event1</if_group> and
   re-test with wazuh-logtest.
 -->
 
@@ -19,7 +19,7 @@
 
   <!-- Encoded / obfuscated command execution -->
   <rule id="100120" level="12">
-    <if_sid>92027,92004,92003</if_sid>
+    <if_group>sysmon_event1</if_group>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(-e\s|-en\s|-enc\s|-enco|-encodedcommand|frombase64string)</field>
     <description>DaC: Encoded PowerShell command on $(win.system.computer) by $(win.eventdata.user)</description>
     <mitre>
@@ -30,7 +30,7 @@
 
   <!-- Download cradle: in-memory fetch-and-execute -->
   <rule id="100121" level="12">
-    <if_sid>92027,92004,92003</if_sid>
+    <if_group>sysmon_event1</if_group>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(downloadstring|downloadfile|downloaddata|invoke-webrequest|iwr\s|net\.webclient|invoke-restmethod|start-bitstransfer)</field>
     <description>DaC: PowerShell download cradle on $(win.system.computer) by $(win.eventdata.user)</description>
     <mitre>
@@ -41,7 +41,7 @@
 
   <!-- Stealth execution flags: hidden window, no profile, bypass -->
   <rule id="100122" level="10">
-    <if_sid>92027,92004,92003</if_sid>
+    <if_group>sysmon_event1</if_group>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(-w\s+hidden|-windowstyle\s+hidden|-nop\s|-noprofile\s.*-e|-exec\s+bypass|-executionpolicy\s+bypass)</field>
     <description>DaC: PowerShell stealth execution flags on $(win.system.computer) by $(win.eventdata.user)</description>
     <mitre>
@@ -51,7 +51,7 @@
 
   <!-- In-memory execution primitives -->
   <rule id="100123" level="12">
-    <if_sid>92027,92004,92003</if_sid>
+    <if_group>sysmon_event1</if_group>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(invoke-expression|iex\s|invoke-command|\[scriptblock\]|reflection\.assembly|\[system\.reflection)</field>
     <description>DaC: PowerShell in-memory execution primitive on $(win.system.computer)</description>
     <mitre>

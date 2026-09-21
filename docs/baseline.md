@@ -55,3 +55,24 @@ Sysmon exclude overrides include, so the event was never emitted.
 Nothing in the SIEM indicated the rule was blind. Detection
 coverage is gated by telemetry configuration independently of
 rule logic.
+
+## Finding — parent-coupled detection gap (T1059.001)
+
+Built-in rule 92057 detects base64-encoded PowerShell only when the
+parent process is powershell.exe (requires win.eventdata.parentImage
+matches powershell.exe). An encoded command launched from cmd.exe,
+a scheduled task, or a service — the common malware pattern — has a
+non-powershell parent and evades 92057 entirely.
+
+Confirmed: `powershell -EncodedCommand <b64>` run from cmd.exe produced
+NO alert from the default ruleset.
+
+Custom rule 100120 anchors on <if_group>sysmon_event1</if_group> with
+no parent-image condition, so it fires regardless of parent. Confirmed
+firing on the cmd.exe-launched encoded command that 92057 missed.
+
+Custom T1059.001 rules, all confirmed firing:
+  100120 encoded command      (fills 92057 parent-coupling gap)
+  100121 download cradle
+  100122 stealth exec flags
+  100123 in-memory primitives
