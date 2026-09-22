@@ -1,0 +1,14 @@
+<group name="local,dac,attack.t1110,attack.t1078,">
+
+  <rule id="100160" level="13" frequency="1" timeframe="120">
+    <if_matched_sid>100150</if_matched_sid>
+    <if_sid>60106</if_sid>
+    <description>DaC: Successful logon after brute-force burst - possible account COMPROMISE ($(win.eventdata.targetUserName) on $(win.system.computer))</description>
+    <mitre>
+      <id>T1110.001</id>
+      <id>T1078</id>
+    </mitre>
+    <group>authentication_success,pci_dss_10.2.5,</group>
+  </rule>
+
+</group>
