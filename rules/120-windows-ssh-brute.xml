@@ -1,0 +1,22 @@
+<!--
+  T1110.001 - SSH brute force against Windows OpenSSH.
+
+  Baseline finding: default rule 60122 (level 5) fires per failed logon
+  but no correlation rule escalates repeated failures. Five failures in
+  16s stayed at level 5. On Linux the equivalent escalates to 5712/level 10.
+  Windows OpenSSH also omits Source Network Address in 4625, so grouping
+  is by target account, not source IP.
+-->
+
+<group name="local,dac,attack.t1110,">
+
+  <rule id="100150" level="10" frequency="5" timeframe="30">
+    <if_matched_sid>60122</if_matched_sid>
+    <same_field>win.eventdata.targetUserName</same_field>
+    <description>DaC: Windows OpenSSH brute force - 5+ failed logons for $(win.eventdata.targetUserName) in 30s</description>
+    <mitre>
+      <id>T1110.001</id>
+    </mitre>
+  </rule>
+
+</group>
